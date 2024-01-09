@@ -6,16 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Entity
-@Table(name="products")
+@Table(name="order-items")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductModel {
+public class OrderItemModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String name;
-    private String description;
+    private Long orderItemId;
+    private Long orderId;
+    private Long productId;
 }

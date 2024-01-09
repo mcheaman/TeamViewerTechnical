@@ -6,16 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name="products")
+@Table(name="orders")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductModel {
+public class OrderModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String name;
-    private String description;
+    private Long orderId;
+    private String account;
+    private LocalDateTime orderTime;
 }
