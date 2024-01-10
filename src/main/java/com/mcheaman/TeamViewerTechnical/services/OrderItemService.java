@@ -4,7 +4,9 @@ import com.mcheaman.TeamViewerTechnical.models.OrderItemModel;
 import com.mcheaman.TeamViewerTechnical.repositories.OrderItemRepository;
 import com.mcheaman.TeamViewerTechnical.requests.OrderItemRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +25,7 @@ public class OrderItemService {
         if(orderItem.isPresent()){
             return orderItem.get();
         }else{
-            //TODO: Throw HTTP error
-            return null;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -44,8 +45,7 @@ public class OrderItemService {
             orderItem.setProductId(orderItemRequest.getProductId());
             return orderItemRepository.save(orderItem);
         }else{
-            //TODO: Throw HTTP error
-            return null;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -56,8 +56,7 @@ public class OrderItemService {
             orderItemRepository.delete(orderItem.get());
             return 1;
         }else{
-            //TODO: Throw HTTP error
-            return -1;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 

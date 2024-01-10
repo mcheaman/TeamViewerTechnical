@@ -4,7 +4,9 @@ import com.mcheaman.TeamViewerTechnical.models.ProductModel;
 import com.mcheaman.TeamViewerTechnical.repositories.ProductRepository;
 import com.mcheaman.TeamViewerTechnical.requests.ProductRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +25,7 @@ public class ProductService {
         if(product.isPresent()){
             return product.get();
         }else{
-            //TODO: Throw HTTP error
-            return null;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -44,20 +45,17 @@ public class ProductService {
             product.setDescription(productRequest.getDescription());
             return productRepository.save(product);
         }else{
-            //TODO: Throw HTTP error
-            return null;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
 
-    public int deleteProduct(Long id) {
+    public void deleteProduct(Long id) {
         Optional<ProductModel> product = productRepository.findById(id);
         if(product.isPresent()){
             productRepository.delete(product.get());
-            return 1;
         }else{
-            //TODO: Throw HTTP error
-            return -1;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
