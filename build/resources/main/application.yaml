@@ -1,8 +1,10 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/product
     username: postgres
     password: ;lkj;lkj
+    url: jdbc:postgresql://localhost:5432/product
+  profiles:
+    active: dev
   jpa:
     hibernate:
       ddl-auto: create-drop
