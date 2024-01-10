@@ -15,11 +15,17 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-
+    /**
+     * Get all orders present in the database
+     * @return List<OrderModel> list of all orders
+     */
     public List<OrderModel> getOrders() {
         return orderRepository.findAll();
     }
-
+    /**
+     * Get an order by specifying the id
+     * @return found OrderModel
+     */
     public OrderModel getOrderById(Long id) {
         Optional<OrderModel> order = orderRepository.findById(id);
         if(order.isPresent()){
@@ -28,7 +34,10 @@ public class OrderService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
-
+    /**
+     * Add a new order
+     * @return saved OrderModel
+     */
     public OrderModel addOrder(OrderRequest orderRequest){
         OrderModel order = new OrderModel();
         order.setAccount(orderRequest.getAccount());
@@ -36,7 +45,10 @@ public class OrderService {
 
         return orderRepository.save(order);
     }
-
+    /**
+     * Update an order by specifying id and providing new data
+     * @return updated OrderModel
+     */
     public OrderModel updateOrder(Long id, OrderRequest orderRequest){
         Optional<OrderModel> order_fetch = orderRepository.findById(id);
         if(order_fetch.isPresent()){
@@ -49,7 +61,9 @@ public class OrderService {
         }
     }
 
-
+    /**
+     * Delete an order by specifying id
+     */
     public void deleteOrder(Long id) {
         Optional<OrderModel> order = orderRepository.findById(id);
         if(order.isPresent()){

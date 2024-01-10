@@ -21,11 +21,17 @@ public class OrderItemService {
     private final OrderItemRepository orderItemRepository;
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
-
+    /**
+     * Get all order items present in the database
+     * @return List<OrderItemModel> list of all order items
+     */
     public List<OrderItemModel> getOrderItems() {
         return orderItemRepository.findAll();
     }
-
+    /**
+     * Get an order item by specifying the id
+     * @return found OrderItemModel
+     */
     public OrderItemModel getOrderItemById(Long id) {
         Optional<OrderItemModel> orderItem = orderItemRepository.findById(id);
         if(orderItem.isPresent()){
@@ -35,6 +41,10 @@ public class OrderItemService {
         }
     }
 
+    /**
+     * Add a new order item, only if the order and product requested exist
+     * @return saved OrderItemModel
+     */
     public OrderItemModel addOrderItem(OrderItemRequest orderItemRequest){
         OrderItemModel orderItem = new OrderItemModel();
         Optional<OrderModel> order = orderRepository.findById(orderItemRequest.getOrderId());
@@ -47,7 +57,10 @@ public class OrderItemService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
-
+    /**
+     * Update an order item by specifying id and providing new data
+     * @return updated OrderItemModel
+     */
     public OrderItemModel updateOrderItem(Long id, OrderItemRequest orderItemRequest){
         Optional<OrderItemModel> order_item_fetch = orderItemRepository.findById(id);
         if(order_item_fetch.isPresent()){
@@ -60,12 +73,13 @@ public class OrderItemService {
         }
     }
 
-
-    public int deleteOrderItem(Long id) {
+    /**
+     * Delete an order item by specifying id
+     */
+    public void deleteOrderItem(Long id) {
         Optional<OrderItemModel> orderItem = orderItemRepository.findById(id);
         if(orderItem.isPresent()){
             orderItemRepository.delete(orderItem.get());
-            return 1;
         }else{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

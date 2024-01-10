@@ -4,6 +4,8 @@ import com.mcheaman.TeamViewerTechnical.models.ProductModel;
 import com.mcheaman.TeamViewerTechnical.requests.ProductRequest;
 import com.mcheaman.TeamViewerTechnical.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,7 @@ public class ProductController {
         return productService.getProducts();
     }
     @Operation(summary = "Get a product by ID")
+    @ApiResponse(responseCode = "404", description = "Product was not found")
     @GetMapping("{id}")
     public ProductModel getProductByID(@PathVariable Long id){
         return productService.getProductById(id);
@@ -36,11 +39,13 @@ public class ProductController {
     @Operation(
             summary = "Update an existing product",
             description = "Update a product by specifying the productId and providing new data")
+    @ApiResponse(responseCode = "404", description = "Product to be updated was not found")
     @PutMapping("{id}")
     public ProductModel updateProduct(@PathVariable Long id, @RequestBody ProductRequest request){
         return productService.updateProduct(id, request);
     }
     @Operation(summary = "Delete a product by ID")
+    @ApiResponse(responseCode = "404", description = "Product to be deleted was not found")
     @DeleteMapping("{id}")
     public void deleteProduct(@PathVariable Long id){
         productService.deleteProduct(id);

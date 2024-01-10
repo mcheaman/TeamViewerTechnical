@@ -15,11 +15,17 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
-
+    /**
+     * Get all products present in the database
+     * @return List<ProductModel> list of all products
+     */
     public List<ProductModel> getProducts() {
         return productRepository.findAll();
     }
-
+    /**
+     * Get a product by specifying the id
+     * @return found ProductModel
+     */
     public ProductModel getProductById(Long id) {
         Optional<ProductModel> product = productRepository.findById(id);
         if(product.isPresent()){
@@ -28,7 +34,10 @@ public class ProductService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
-
+    /**
+     * Add a new product
+     * @return saved ProductModel
+     */
     public ProductModel addProduct(ProductRequest productRequest){
         ProductModel product = new ProductModel();
         product.setName(productRequest.getName());
@@ -36,7 +45,10 @@ public class ProductService {
 
         return productRepository.save(product);
     }
-
+    /**
+     * Update a product by specifying id and providing new data
+     * @return updated ProductModel
+     */
     public ProductModel updateProduct(Long id, ProductRequest productRequest){
         Optional<ProductModel> product_fetch = productRepository.findById(id);
         if(product_fetch.isPresent()){
@@ -49,7 +61,9 @@ public class ProductService {
         }
     }
 
-
+    /**
+     * Delete a product by specifying id
+     */
     public void deleteProduct(Long id) {
         Optional<ProductModel> product = productRepository.findById(id);
         if(product.isPresent()){
