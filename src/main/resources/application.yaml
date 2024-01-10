@@ -14,4 +14,4 @@ spring:
 
 mcheaman:
   openapi:
-    dev-url: http://localhost:8080
+    dev-url: http://localhost:8081
